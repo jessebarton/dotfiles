@@ -1,0 +1,223 @@
+[colors]
+accent = #FFFfff
+
+# -------------------------------------------------
+# TOP BAR
+# -------------------------------------------------
+[bar/top]
+enable-ipc = true
+monitor = ${env:MONITOR:}
+width = 100%
+height = 25
+
+;background = #222
+background = #000000
+foreground = #eee
+
+border-bottom-size = 0
+border-bottom-color = #000000
+
+overline-size = 10
+overline-color = ${self.background}
+underline-size = 10
+underline-color = ${self.background}
+
+padding-left = 0
+padding-right = 0
+module-margin-left = 3
+module-margin-right = 3
+
+font-0 = NotoSans-Regular:size=8;0
+font-1 = MaterialIcons:size=12;2
+font-2 = Termsynu:size=8;0
+font-3 = Siji:pixelsize=10;1
+font-4 = FontAwesome:size=10;0
+
+modules-left = 
+modules-center = xwindow
+modules-right = wireless-network wired-network screen-brightness battery clock
+
+tray-position = right
+
+# -------------------------------------------------
+# BOTTOM BAR
+# -------------------------------------------------
+[bar/bottom]
+monitor = ${env:MONITOR:}
+bottom = true
+width = 100%
+height = 25
+
+background = #000000
+foreground = #eefafafa
+
+overline-size = 3
+overline-color = ${colors.accent}
+underline-size = 3
+underline-color = ${colors.accent}
+
+border-top-size = 1
+border-top-color = #000000
+
+spacing = 3
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 6
+
+font-0 = NotoSans-Regular:size=8;0
+font-1 = Unifont:size=5;0
+font-2 = FontAwesome:size=8;0 
+font-3 = NotoSans-Regular:size=8;-1
+font-4 = Unifont:size=5;0
+font-5 = Termsynu:size=7;0
+
+modules-left = i3
+modules-right = fs-root cpu memory
+
+# -------------------------------------------------
+# FS-ROOT
+# -------------------------------------------------
+[module/fs-root]
+type = internal/fs
+mount-0 = /
+label-mounted = %{F#FFF}%percentage_used%%%{F-} used of %mountpoint%
+
+# -------------------------------------------------
+# SCREEN BRIGHTNESS
+# -------------------------------------------------
+[module/screen-brightness]
+type = custom/script
+format = <label>
+label =  %{F#FFF}%output:0:15%%{F-}
+exec = ~/.config/polybar/get_brightness.sh
+interval = 10
+
+# -------------------------------------------------
+# I3
+# -------------------------------------------------
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+pin-workspaces = true
+
+label-dimmed-underline = ${root.background}
+label-focused = %index%
+label-focused-foreground = #f3f3f3
+label-focused-background = #3f3f3f
+label-focused-underline = #FFF 
+label-focused-font = 4
+label-focused-padding = 4
+
+label-unfocused = %index%
+label-unfocused-underline = #555555
+label-unfocused-font = 4
+label-unfocused-padding = 4
+
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-underline = #9b0a20
+label-urgent-font = 4
+label-urgent-padding = 4
+
+label-visible = %index%
+label-visible-foreground = #55ffffff
+label-visible-font = 4
+label-visible-padding = 4
+
+# -------------------------------------------------
+# CPU
+# -------------------------------------------------
+[module/cpu]
+type = internal/cpu
+interval = 1.5
+format = <label>
+label = CPU %{F#FFF}%percentage%%%{F-}
+label-font = 3
+label-foreground = #99
+
+# -------------------------------------------------
+# MEMORY
+# -------------------------------------------------
+[module/memory]
+type = internal/memory
+interval = 0.2
+format = <label>
+label = RAM %{F#FFF}%gb_used%%{F-}/%{F#FFF}%gb_free%%{F-}
+label-font = 3
+format-padding = 3
+label-foreground = #99
+
+# -------------------------------------------------
+# WIRELESS NETWORK
+# -------------------------------------------------
+[module/wireless-network]
+type = internal/network
+interface = wlp58s0
+interval = 2.0
+ping-interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-disconnected =  not connected
+label-disconnected-foreground = #66
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+
+animation-packetloss-0 = 
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 
+animation-packetloss-1-foreground = ${bar/top.foreground}
+animation-packetloss-framerate = 500
+
+# -------------------------------------------------
+# WIRED NETWORK
+# -------------------------------------------------
+[module/wired-network]
+type = internal/network
+interface = enp9s0u1u2
+interval = 2.0
+label-connected =   %local_ip%
+label-disconnected = Ethernet disconnected
+label-disconnected-foreground = #66
+
+# -------------------------------------------------
+# CLOCK
+# -------------------------------------------------
+[module/clock]
+type = internal/date
+interval = 5
+format-padding = 3
+format-background = #000
+format-foreground = #FFF
+date = %%{F#FFF}%Y-%m-%d%%{F-}  %%{F#FFF}%I:%M %p%%{F-}
+
+# -------------------------------------------------
+# VOLUME
+# -------------------------------------------------
+# -------------------------------------------------
+# BATTERY
+# -------------------------------------------------
+[module/battery]
+type = internal/battery
+full-at = 98
+format-charging = %{T3} %{F#FFF}<label-charging>%{F-} %{T-} 
+format-discharging = %{T3} %{F#FFF}<label-discharging>%{F-} %{T-} 
+;format-full = %{T3}Battery <label-full> 
+label-charging-font = 3
+label-discharging-font = 3
+
+# -------------------------------------------------
+# XWINDOW
+# -------------------------------------------------
+[module/xwindow]
+type = internal/xwindow
+label-maxlen = 75
+label-foreground = #bbb
+
+; vim:ft=dosini
