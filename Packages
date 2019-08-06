@@ -12,6 +12,7 @@ bolt
 breeze-icons
 sysstat
 acpi
+alsa-utils
 bzip2
 cheese
 cloc
