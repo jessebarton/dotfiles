@@ -1,0 +1,221 @@
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Monospace 9
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec termite
+
+# kill focused window
+bindsym $mod+q kill
+bindsym $mod+F4 kill
+
+# class                 border      bground      text    indicator   child_border
+client.focused          #cccccc30   #96969680   #FFFFFF  #cccccc20    #cccccc10
+client.focused_inactive #96969680   #96969680   #FFFFFF  #cccccc20    #cccccc00
+client.unfocused        #333333     #222222     #888888  #cccccc20    #cccccc00
+client.urgent           #2F343A     #96969620   #FFFFFF  #96969620    #96969620
+client.placeholder      #000000     #0C0C0C     #FFFFFF  #000000      #0C0C0C
+hide_edge_borders both
+new_window 1pixel
+client.background       #FFFFFF
+
+# change focus
+ 
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+bindsym $mod+g			gaps inner current plus 5
+bindsym $mod+Shift+g		gaps inner current minus 5
+
+bindsym $mod+Shift+y		exec --no-startup-id i3resize left
+bindsym $mod+Shift+u		exec --no-startup-id i3resize down
+bindsym $mod+Shift+i		exec --no-startup-id i3resize up
+bindsym $mod+Shift+o		exec --no-startup-id i3resize right
+
+# #---Workspace Bindings---# #
+bindsym $mod+Home		workspace $ws1
+bindsym $mod+Shift+Home		move container to workspace $ws1
+bindsym $mod+Prior		workspace prev
+bindsym $mod+Shift+Prior	move container to workspace prev
+bindsym $mod+Next		workspace next
+bindsym $mod+Shift+Next		move container to workspace next
+bindsym $mod+Tab		workspace back_and_forth
+bindsym $mod+XF86Back		workspace prev
+bindsym $mod+Shift+XF86Back	move container to workspace prev
+bindsym $mod+XF86Forward	workspace next
+bindsym $mod+Shift+XF86Forward	move container to workspace next
+bindsym $mod+semicolon		workspace next
+bindsym $mod+apostrophe		split horizontal ;; exec $term
+bindsym $mod+slash		split vertical ;; exec $term
+bindsym $mod+Shift+slash	kill
+bindsym $mod+backslash		workspace back_and_forth
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+# define names for workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+x move workspace to output right
+bindsym $mod+Shift+x [urgent=latest] focus
+
+# shortcut applications
+# bindsym Print exec --no-startup-id scrot -e 'mv $f ~/Pictures/screenshots' && notify-send "Screenshot Taken"
+bindsym Print exec --no-startup-id deepin-screenshot
+bindsym $mod+l exec ~/.config/i3/lock.sh
+bindsym $mod+d exec rofi -show run
+
+# set specific windows to floating mode
+for_window[window_role="app"] floating enable
+for_window[window_role="pop-up"] floating enable
+for_window[window_role="task_dialog"] floating enable
+for_window[title="Preferences$"] floating enable
+for_window[title="Spotify"] floating enable
+
+# #---Dropdown Windows---# #
+# General dropdown window traits. The order can matter.
+for_window [instance="dropdown_*"] floating enable
+for_window [instance="dropdown_*"] move scratchpad
+for_window [instance="dropdown_*"] sticky enable
+for_window [instance="dropdown_*"] scratchpad show
+for_window [instance="dropdown_*"] move position center
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+
+# MPD control using media keys
+bindsym XF86AudioPrev exec --no-startup-id "mpc prev"
+bindsym XF86AudioPlay exec --no-startup-id "mpc toggle"
+bindsym XF86AudioNext exec --no-startup-id "mpc next"
+
+mode "spotify" {
+	bindsym Left exec  "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+	bindsym Up exec  "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+	bindsym Right exec  "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+m mode "spotify"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindcode 44 resize shrink width 10 px or 10 ppt
+        bindcode 45 resize grow height 10 px or 10 ppt
+        bindcode 46 resize shrink height 10 px or 10 ppt
+        bindcode 47 resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindcode 113 resize shrink width 10 px or 10 ppt
+        bindcode 116 resize grow height 10 px or 10 ppt
+        bindcode 111 resize shrink height 10 px or 10 ppt
+        bindcode 114 resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# i3-gaps
+gaps inner 20
+gaps outer 0
+
+# startup applications
+exec --no-startup-id compton -c -b
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id feh --bg-fill ~/Pictures/stone.jpg
+exec_always --no-startup-id pulseaudio -k
+exec_always --no-startup-id pulseaudio --start
+exec_always --no-startup-id killall pa-applet
+exec_always --no-startup-id pa-applet
+exec_always --no-startup-id blueman-applet
+exec_always --no-startup-id nm-applet
+exec_always --no-startup-id g610-led -a FFFFFF
+exec_always --no-startup-id /opt/Kaseya/LFCHTV74016684267745/bin/AgentMon
