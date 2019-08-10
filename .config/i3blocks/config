@@ -141,9 +141,9 @@ interval=30
 # OpenVPN support
 #
 # Support multiple VPN, with colors.
-[openvpn]
-label=
-interval=20
+#[openvpn]
+#label=
+#interval=20
 
 # Date Time
 #
